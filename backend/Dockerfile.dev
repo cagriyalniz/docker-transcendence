@@ -1,23 +1,18 @@
 FROM debian:buster
 
-SHELL ["/bin/bash", "--login", "-c"]
+RUN apt upgrade && apt update && apt-get install curl git vim -y
 
-RUN su -
+#RUN apt install nodejs  npm -y
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+RUN nvm install 20
+RUN nvm use 20
 
-RUN apt upgrade && apt update && apt-get install vim -y
+#RUN npm install -g @nestjs/cli
 
-RUN apt-get install -y curl wget
+RUN git clone  https://github.com/enesozmert/ft-transcendence.git /ft-transcendence
 
-RUN apt install nodejs  npm -y
-
-RUN npm install -g @nestjs/cli
-
-RUN cd ~
-
-RUN curl -o- https://github.com/enesozmert/ft-transcendence.git | bash
-
-RUN cd ft-transcendence.
-
-RUN npm i 
-
-RUN npm run start
+WORKDIR /ft-transcendence
+RUN npm install
+cmd ["npm", " run start"]

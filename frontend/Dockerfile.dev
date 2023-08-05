@@ -1,23 +1,19 @@
 FROM debian:buster
 
-SHELL ["/bin/bash", "--login", "-c"]
+#SHELL ["/bin/bash", "--login", "-c"]
 
-RUN su -
+RUN  apt upgrade && apt update && apt-get install curl git wget vim npm -y
 
-RUN  apt upgrade && apt update && apt-get install vim -y
-
-RUN  apt-get install -y curl wget
-
-RUN  apt install nodejs  npm -y
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+RUN [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+RUN nvm install 16
+RUN nvm use 16
 
 RUN npm install -g @angular/cli
 
-RUN cd ~
+RUN git clone https://github.com/Fatma-Ozturk/FtTranscendenceUI.git /FtTranscendenceUI
+WORKDIR /FtTranscendenceUI
 
-RUN curl -o- https://github.com/Fatma-Ozturk/FtTranscendenceUI.git | bash
-
-RUN cd FtTranscendenceUI
-
-RUN npm i 
-
-RUN ng s --o 
+RUN npm i
+cmd ["ng", "s --o "]
