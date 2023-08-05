@@ -2,12 +2,13 @@ FROM debian:buster
 
 SHELL ["/bin/bash", "--login", "-c"]
 
+RUN su -
 
-RUN apt upgrade && apt-update && apt-install vim -y
+RUN  apt upgrade && apt update && apt-get install vim -y
 
-RUN apt-get install -y curl wget
+RUN  apt-get install -y curl wget
 
-RUN sudo apt install nodejs@latest  npm -y
+RUN  apt install nodejs  npm -y
 
 RUN npm install -g @angular/cli
 
