@@ -1,0 +1,22 @@
+FROM debian:buster
+
+SHELL ["/bin/bash", "--login", "-c"]
+
+
+RUN apt upgrade && apt-update && apt-install vim -y
+
+RUN apt-get install -y curl wget
+
+RUN sudo apt install nodejs@latest  npm -y
+
+RUN npm install -g @angular/cli
+
+RUN cd ~
+
+RUN curl -o- https://github.com/Fatma-Ozturk/FtTranscendenceUI.git | bash
+
+RUN cd FtTranscendenceUI
+
+RUN npm i 
+
+RUN ng s --o 

@@ -1,0 +1,19 @@
+FROM postgres:buster
+
+ENV POSTGRES_PASSWORD=postgrespw
+
+SHELL ["/bin/bash", "--login", "-c"]
+
+RUN apt upgrade && apt update && apt-get install vim
+
+RUN su potgres
+
+RUN psql
+
+RUN psql -U postgres -c "CREATE DATABASE \"FtTranscendence\";"
+RUN psql -U postgres -c "CREATE USER baseuser WITH PASSWORD '123';"
+RUN psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE \"FtTranscendence\" TO baseuser;"
+RUN psql -U postgres -c "ALTER ROLE baseuser CREATEDB;"
+
+
+COPY init.sql /docker-entrypoint-initdb.d/

@@ -1,0 +1,22 @@
+FROM debian:buster
+
+SHELL ["/bin/bash", "--login", "-c"]
+
+
+RUN apt upgrade && apt-update && apt-install vim -y
+
+RUN apt-get install -y curl wget
+
+RUN sudo apt install nodejs@latest  npm -y
+
+RUN npm install -g @nestjs/cli
+
+RUN cd ~
+
+RUN curl -o- https://github.com/enesozmert/ft-transcendence.git | bash
+
+RUN cd ft-transcendence.
+
+RUN npm i 
+
+RUN npm run start

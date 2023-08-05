@@ -1,0 +1,40 @@
+version: "3.5"
+
+services:
+  nestjs:
+    container_name: nestjs
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    networks:
+      - transcendence-network
+    ports:
+      - 3000:3000
+    restart: always
+    tty: true
+
+  angular_app:
+    container_name: angular
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    networks:
+      - transcendence-network
+    ports:
+      - 4200:4200
+    tty: true
+
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:13.1
+    environment:
+      POSTGRES_PASSWORD: postgrespw
+    networks:
+      - transcendence-network
+    ports:
+      - 5432:52000
+
+networks:
+  transcendence-network:
